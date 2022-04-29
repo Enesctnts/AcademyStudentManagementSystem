@@ -4,3 +4,60 @@ Microsoft.EntityFrameworkCore.SqlServer  5.0.14
 Microsoft.EntityFrameworkCore.Tools  5.0.14
 Microsoft.EntityFrameworkCore.Design  5.0.14
 Microsoft.AspnetCore.Identity.EntityFrameworkCore 5.0.14
+
+Auto Mapper 9.0.0 
+AutoMapper.Extensions.Microsoft.DependencyInjection 7.0.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Proje Detaylarý
+
+ViewModels'e UsersAddressVM ekledik bunu entity katmanýna eklememizin sebebi her taraftan eriþilsin diye.
+Normalde viewmodel oluþtururken UI katmanýna ekliyoduk sadece ekranda göstermek istediðimizde UI katmanýna ekliyoruz.
+Bu projede oluþturdugumuz örnek olarak UsersAddressVM sadece ekranda göstermek için oluþturmuyoruz ayrýca bunu veritabanýna yazmak için kullanýcaz.
+Yani hem UI hem Bll Hemde Dal katmaný kullanýcak ViewModeli. 
+
+Auto Mapper 9.0.0 
+AutoMapper.Extensions.Microsoft.DependencyInjection 7.0.0 kütüphanelerini projeye dahil ettik çünkü UsersAddress ve UsersAddressVM birbirleriyle eþleþtirmek için bunlarý yapýyoruz.
+tek tek elimizde DTO larda yaptýgýmýz gibi örnek name=x.name falan yapýyoduk. bunlarý otomatikmen Auto Mapper kendisi yapýyor. Hani class için ve hangi ViewModel için yapcagýmýzý
+projeye söylüyoruz.  
+
+Bu iþlem için Maps classý oluþturduk ve onu profile dan kalýtým aldýk --> Maps : Profile bu þekilde 
+
+Bu Maps sýnýfýnda constructorunda aþagýdaki iþlemleri yapýyoruz.
+
+//UserAddress ve VM'yi birbirine dönüþtür --> CreateMap<UsersAddress, UsersAddressVM>().ReverseMap(); yapýyoruz.
+ReverseMap() yapmamýzýn amacý aþagýdaki iþlemi tek seferde yapmasýdýr.
+//UserAddress'ý UsersAddressesVm'ye dönüþtür
+            //CreateMap<UsersAddress, UsersAddressVM>();   //DAL--> BLL
+
+            //UsersAddressVm'ý UserAddress'ye dönüþtür
+            //CreateMap<UsersAddressVM, UsersAddress>();   //PL-->BLL-->DAL
+
+Bu iþlemlerden sonra STARTUP ' ta  Mapleme iþlemi yaptýgýmýzý bildiriyoruz. STARTUP'ta ConfigureServices içine yapýyoruz bu iþlemi 
+//Mapleme eklendi.
+services.AddAutoMapper(typeof(Maps));
+
+Bu aþamadan sonra IResult yapýsýný projeye dahil ettik bunu yapmamýzýn amacý projeye ürün eklerken baþarýlý mý baþarýsýz mý bi deðer dönsün diye bunlarý yapýyoruz.
+            
