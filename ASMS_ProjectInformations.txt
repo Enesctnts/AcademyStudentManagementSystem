@@ -60,4 +60,9 @@ Bu iþlemlerden sonra STARTUP ' ta  Mapleme iþlemi yaptýgýmýzý bildiriyoruz. STAR
 services.AddAutoMapper(typeof(Maps));
 
 Bu aþamadan sonra IResult yapýsýný projeye dahil ettik bunu yapmamýzýn amacý projeye ürün eklerken baþarýlý mý baþarýsýz mý bi deðer dönsün diye bunlarý yapýyoruz.
+Business katmanýnda serviceler ve manager kýsýmlarýnda CRUD iþlemleri yapýlmaya baþlandý. 
+
+var cities = _unitofWork.CityRepo.GetAll(x => !x.IsDeleted, includeEntities: "Districts"); (includeEntities: "Districts" --> bu iþlem ile join iþlemi yapýlýyor.)
+ICollection<CityVM> allCities = _mapper.Map<IQueryable<City>, ICollection<CityVM>>(cities);
+Bu iþlem CityGetAll için yazýldý. 
             
