@@ -29,10 +29,10 @@ namespace ASMSEntityLayer.ViewModels
         public  AppUser AppUser { get; set; } //ViewModel oluşturulken virtual kullanılmaz normalde public virtual AppUser AppUser şeklindeydi ama viewmodelde kullanmıyoruz.
 
         [Required(ErrorMessage ="Mahalle seçimi gereklidir.")]
-        public  Neighbourhood Neighbourhood { get; set; }
+        public  NeighbourhoodVM Neighbourhood { get; set; }
 
         //ToDo: ??? Aşagıdakilerle il ve ilçeye ulaşabilir miyim?
-        public City City { get; set; }
-        public District District { get; set; }
+        public CityVM City { get; set; }
+        public DistrictVM District { get; set; }
     }
 }
