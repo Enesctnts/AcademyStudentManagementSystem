@@ -28,8 +28,6 @@ namespace ASMSDataAccessLayer
         public virtual DbSet<StudentsCourseGroup> StudentsCourseGroups { get; set; }
         public virtual DbSet<StudentAttendance> StudentAttendances { get; set; }
         public virtual DbSet<UsersAddress> UsersAddresses { get; set; }
-        public virtual DbSet<Mother> Mothers { get; set; }
-        public virtual DbSet<Child> Childs { get; set; }
 
         //override
         protected override void OnModelCreating(ModelBuilder builder)
