@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ASMSBusinessLayer.ViewModels
+{
+    public class EmailMessage
+    {
+        public string[] Contacts { get; set; }//Dizi olmasının sebebi aynı anda birden fazla kişiye mail atabilmek için string dizisi şeklinde yaptık.
+        public string[] CC { get; set; }
+        public string[] BCC { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+
+    }
+}
