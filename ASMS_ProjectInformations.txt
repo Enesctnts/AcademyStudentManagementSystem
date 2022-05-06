@@ -65,4 +65,49 @@ Business katmanýnda serviceler ve manager kýsýmlarýnda CRUD iþlemleri yapýlmaya 
 var cities = _unitofWork.CityRepo.GetAll(x => !x.IsDeleted, includeEntities: "Districts"); (includeEntities: "Districts" --> bu iþlem ile join iþlemi yapýlýyor.)
 ICollection<CityVM> allCities = _mapper.Map<IQueryable<City>, ICollection<CityVM>>(cities);
 Bu iþlem CityGetAll için yazýldý. 
-            
+
+Business katmanýnda serviceler ve manager kýsýmlarý oluþturuldu.
+Mail göndermek iþlemi yapmak için EmailMessage classý oluþturulduk. IEmailSender oluþturuldu. IEmailSender da Task SendMessage(); oluþturuldu. 
+Task olmasýnýn sebebi asenkron þeklinde tanýmlýyoruz.
+
+
+EmailSender a aþagýdaki propertyleri ekledik.
+public string SenderMail => _configuration.GetSection("EmailOptions:SenderMail").Value;
+        public string Password => _configuration.GetSection("EmailOptions:Password").Value;
+        public string Smtp => _configuration.GetSection("EmailOptions:Smtp").Value;
+        public int SmtpPort => Convert.ToInt32(_configuration.GetSection("EmailOptions:SmtpPort").Value);
+
+        bu propertyleri aþagýdaki bilgilerle almýþ oluyoruz. ve bunlarý sendmessage içinde dolduruyoruz.
+
+EmailSender'a private readonly IConfiguration _configuration; ekledik. çünkü appsettings' e 
+ 
+ "EmailOptions": {
+    "SenderMail": "303asms@gmail.com",
+    "Password": "ezgi was here",
+    "Smtp": "smtp.gmail.com",
+    "SmtpPort": "587"
+  },
+  "ProjectManagers": {
+    "Email": "betulaksan1992@gmail.com"
+
+  }
+
+  bunlarý ekledik ve EmailSender içindeki SendMessage içinde _configuration metoduyla burdaki bilgileri çekebileceðiz.
+  SendMessage içinde mail iþlemlerini yaptýk.
+
+ IStudentBusinessEngine ve StudentBusinessEngine projeye dahil ettik. Bu serviceler için StudentVm oluþturduk.
+ çünkü ilerde ekranda Studentle alakalý bilgiler  görmek isteyeceðimiz durumda bu ViewModelden bu bilgileri almýþ olucaz.
+ Bu StudentBusinesEngine yani manager kýsmýndada  da mapper iþlemi yapýyoruz. Bu iþlem bize gelen iþlemleri otomatik olarak yapmamýzý saðlýyor.
+ Mesela name=studen.name gibi iþlemleri biz yapýyoduk þimdi mapper yapýyor.
+ 
+
+ RegisterViewModel oluþturduk bunu oluþturmamýzýn sebebi UI Katmaný Business katmanýný görüyor.
+ Biz Repolarýmýzý DataAccess katmanýnda yaptýgýmýz için ordaki verilere ulaþamýyoruz. 
+ Bu sebepten dolayý Controllarda herþeyi ViewModeller üzerinden yapýyoruz. 
+ Repolarýmýz Business katmanýnda olsaydý ViewModeller üzerinden deðil direk Entityler üzerinde gidicektik.
+
+ Bu RegisterViewModel kullanarak Register iþlemi için public async Task<IActionResult> Register(RegisterViewModel model) yapýyoruz. 
+ Async yapmamýzýn sebebi asenkron olmasýný istediðimiz için.
+
+
+ 
