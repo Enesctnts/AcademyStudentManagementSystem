@@ -241,6 +241,61 @@ namespace ASMSPresentationLayer.Controllers
                 ViewBag.ConfirmResetPasswordFailureMessage = "Beklenmedik bir hata oluştu!";
                 return View();
             }
+            //Bu alttakileri bu şekilde cshtml sayfasına gönderebilirdik yukarda bu şekil yaptık ama yukarda tek bir tane değişken vardı onu viewbag ile gönderdik. burda 2 değişken var ViewModel ile göndermek bu ikisini daha mantıklı daha güzel durur.
+            //ViewBag.UserId = userId;
+            //ViewBag.Code = code;
+
+            //yukardaki işlemi Viewmodel yaparak yapmış olduk.
+            ResetPasswordViewModel model = new ResetPasswordViewModel()
+            {
+                UserId = userId,
+                Code = code
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmResetPassword(ResetPasswordViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                var user = await _userManager.FindByIdAsync(model.UserId);
+                if (user!=null)
+                {
+                    ModelState.AddModelError("", "Kullanıcı bulunamadı");
+                    //log mesajı yerleştir.
+                    //throw new Exception();
+                }
+                //ResetPasswordViewModel daki code alanında anlamsız bir token değeri olcak onu string çevirip tokenDecoded e atıyoruz.
+                var tokenDecoded = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Code));
+
+                //burda ise şifre yenileme işlemini usermanagerın bize sunduğu ResetPasswordAsync metodu sayesinde yapıyoruz. Bu metoda user , token değerimizi ve yeni şifremizi yolluyoruz.
+                var result = await _userManager.ResetPasswordAsync(user, tokenDecoded, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    TempData["ConfirmResetPasswordSuccess"] = "Şifreniz başarıyla güncellenmiştir!";
+                    return RedirectToAction("login", "Account", new{email = user.Email});
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Şifrenizin değiştirilme işleminde beklenmedik bir hata oluştu! Tekrar deneyiniz");
+                    return View(model);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                //ex loglanacak
+                ModelState.AddModelError("", "Beklenmedik bir hata oluştu! Tekrar deneyiniz!");
+                return View(model);
+
+            }
         }
     }
 }
