@@ -1,3 +1,4 @@
+using ASMSBusinessLayer.EmailService;
 using ASMSDataAccessLayer;
 using ASMSEntityLayer.IdentityModels;
 using ASMSEntityLayer.Mappings;
@@ -55,6 +56,8 @@ namespace ASMSPresentationLayer
 
             //Mapleme eklendi.
             services.AddAutoMapper(typeof(Maps));
+
+            services.AddScoped<IEmailSender, EmailSender>();
 
         }
 
