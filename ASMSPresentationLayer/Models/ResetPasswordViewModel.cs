@@ -8,7 +8,9 @@ namespace ASMSPresentationLayer.Models
 {
     public class ResetPasswordViewModel
     {
+        [Required]
         public string UserId { get; set; }
+        [Required]
         public string Code { get; set; }
 
         [Required(ErrorMessage = "Yeni Şifre Alanı Zorunludur!")]
