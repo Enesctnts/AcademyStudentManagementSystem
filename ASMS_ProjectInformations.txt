@@ -109,5 +109,6 @@ EmailSender'a private readonly IConfiguration _configuration; ekledik. çünkü app
  Bu RegisterViewModel kullanarak Register iþlemi için public async Task<IActionResult> Register(RegisterViewModel model) yapýyoruz. 
  Async yapmamýzýn sebebi asenkron olmasýný istediðimiz için.
 
-
+Login iþlemi yapýldý.
+login iþlemi için loginviewmodel oluþturuldu.LoginViewModel' e bize lazým olan propertyler yazýldý ve Login iþleminin post kýsmýnda bu view modele göre yapýyoruz.
  
