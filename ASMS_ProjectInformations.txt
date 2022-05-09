@@ -16,21 +16,6 @@ AutoMapper.Extensions.Microsoft.DependencyInjection 7.0.0
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Proje Detaylarý
 
 ViewModels'e UsersAddressVM ekledik bunu entity katmanýna eklememizin sebebi her taraftan eriþilsin diye.
