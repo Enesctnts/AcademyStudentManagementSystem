@@ -1,4 +1,6 @@
+using ASMSBusinessLayer.ContractsBLL;
 using ASMSBusinessLayer.EmailService;
+using ASMSBusinessLayer.ImplementationsBLL;
 using ASMSDataAccessLayer;
 using ASMSEntityLayer.IdentityModels;
 using ASMSEntityLayer.Mappings;
@@ -57,7 +59,9 @@ namespace ASMSPresentationLayer
             //Mapleme eklendi.
             services.AddAutoMapper(typeof(Maps));
 
-            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<IStudentBusinessEngine, StudentBusinessEngine>();
+            services.AddScoped<ASMSDataAccessLayer.ContactsDAL.IUnitOfWork, ASMSDataAccessLayer.ImplementationsDAL.UnitOfWork>();
 
         }
 
