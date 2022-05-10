@@ -96,4 +96,14 @@ EmailSender'a private readonly IConfiguration _configuration; ekledik. çünkü app
 
 Login iþlemi yapýldý.
 login iþlemi için loginviewmodel oluþturuldu.LoginViewModel' e bize lazým olan propertyler yazýldý ve Login iþleminin post kýsmýnda bu view modele göre yapýyoruz.
- 
+
+
+Projenin Headeriný ve footer kýsmýný partial olarak aldýk ve layoutda partial çagýrdýk.
+Core da partial yerine ViewComponent yapýsý geldi. 
+PartialView yapýlanmasý ihtiyacý olan datalarý Controller üzerinden elde edeceði için Controllerdaki maliyeti artýrýr ve solid prensiblerine aykýrý davranýr.
+
+PartialView yapýsal olarak controller üzerinden beslenmektedir.
+
+ViewComponent ihtiyacý olan datalarý controller üzerinden deðilde direkt kendi cs dosyasýndan elde etmektedir.
+
+UI katmanýnda Views içinde _ViewImports.cshtml dosyasýnda projede kullanýlan tüm usingler ve taghelperlarý ekliyoruz
