@@ -1,0 +1,85 @@
+﻿@inject SignInManager<AppUser> signManager
+
+<!-- nav -->
+<nav class="main-header d-flex">
+    <div id="brand">
+        <div id="logo">
+            <a href="/Home/Index/">
+                <i class="fas fa-crosshairs"></i>
+            </a>
+        </div>
+        <div id="word-mark">
+            <h1>
+                <a href="/Home/Index/">ASMS</a>
+            </h1>
+        </div>
+    </div>
+    <div id="menu">
+        <div id="menu-toggle">
+            <div id="menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+        <ul class="text-center nav-honey">
+            <li>
+                <a href="index.html" class="active ">Ana Sayfa</a>
+            </li>
+            <li>
+                <a class="scroll" href="#about">Hakkımızda</a>
+            </li>
+            <li>
+                <a class="scroll" href="#services">Eğitimler</a>
+            </li>
+            <li>
+                <a class="scroll" href="#projects">İstihdam</a>
+            </li>
+            <li>
+                <a class="scroll" href="#contact">İletişim</a>
+            </li>
+            @if (signManager.IsSignedIn(Context.User))
+            {
+                <li>
+                    <div class="dropdown">
+                        <a class="nav-link btn btn-default dropdown-toggle" id="dropdownMenuLink" data-bs-toogle="dropdown" aria-expanded="false" style="margin-right:10px; background-color:white;color:black;"> 
+
+                            @signManager.UserManager.FindByNameAsync(Context.User.Identity.Name).Result.Name
+                            @signManager.UserManager.FindByNameAsync(Context.User.Identity.Name).Result.Surname
+                            
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="drowdownMenuLink" style="background-color:darkblue; color:red;">
+                            <li>
+                                <a class="dropdown-item" style="color:white" href="#">
+                                    Hesap Bilgilerim
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" style="color:white" asp-controller="Account" action="Logout">
+                                    Eğitim Bilgilerim
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" style="color:white" asp-controller="Account" action="Logout">
+                                    Çıkış Yap
+                                </a>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li class="login">
+                    <button type="button" class="btn login-btn text-uppercase " data-toggle="modal" data-target="#exampleModalCenter">
+                        Giriş Yap
+                    </button>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+</nav>
+<!-- //nav -->
