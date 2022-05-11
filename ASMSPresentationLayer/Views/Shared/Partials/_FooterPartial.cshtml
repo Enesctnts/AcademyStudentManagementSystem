@@ -1,4 +1,6 @@
-﻿<!-- Footer Started-->
+﻿@inject SignInManager<AppUser> signManager
+
+<!-- Footer Started-->
 
 <footer class="footer text-left">
     <div class="container py-4 py-sm-5">
@@ -34,18 +36,21 @@
                 </ul>
             </div>
             <div class="col-lg-2 col-md-4 col-sm-6 mt-sm-5">
-                <ul class="list-footer" data-aos="fade-up">
-                    <li>
-                        <a href="#register" data-toggle="modal" data-target="#exampleModalCenter" class="nav-link scroll">
-                            Giriş Yap
-                        </a>
-                    </li>
-                    <li class="my-2">
-                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter2" class="nav-link">
-                            Kayıt Ol
-                        </a>
-                    </li>
-                </ul>
+                @if (!signManager.IsSignedIn(Context.User))
+                {
+                    <ul class="list-footer" data-aos="fade-up">
+                        <li>
+                            <a href="#register" data-toggle="modal" data-target="#exampleModalCenter" class="nav-link scroll">
+                                Giriş Yap
+                            </a>
+                        </li>
+                        <li class="my-2">
+                            <a href="#" data-toggle="modal" data-target="#exampleModalCenter2" class="nav-link">
+                                Kayıt Ol
+                            </a>
+                        </li>
+                    </ul>
+                }
             </div>
             <div class="offset-lg-4"></div>
             <div class="col-lg-4 footer-end-grid mt-md-0 mt-sm-5" data-aos="fade-up">
