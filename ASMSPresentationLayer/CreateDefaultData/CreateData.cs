@@ -33,7 +33,8 @@ namespace ASMSPresentationLayer.CreateDefaultData
                         CreatedDate=DateTime.Now,
                         Description=$"Sistem tarafından {item} rolü ektedir."
                     };
-                    roleManager.CreateAsync(role);
+                    //Asenkron işlem yaptıgımız için roleManager.CreateAsync(role).Result sonuna result yapmamız lazım rol ataması yaparken bu işlemleri hepsini yapana kadar bekle diyoruz. Result eklediğimiz zaman asenkron olmadan çıkıyo senkron oluyo bu sayede bu işlemleri yapıyo sonra diger işlemlere geçiyor. Asenkron oldugu zaman arka tarafta bu işlemleri yaparken çakışıyo çünkü asenkron oldugu zaman başka işlemler de yapılıyor.
+                    var result = roleManager.CreateAsync(role).Result;
 
                 }
             }
