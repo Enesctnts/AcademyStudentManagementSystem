@@ -107,3 +107,32 @@ PartialView yapýsal olarak controller üzerinden beslenmektedir.
 ViewComponent ihtiyacý olan datalarý controller üzerinden deðilde direkt kendi cs dosyasýndan elde etmektedir.
 
 UI katmanýnda Views içinde _ViewImports.cshtml dosyasýnda projede kullanýlan tüm usingler ve taghelperlarý ekliyoruz
+
+Rol atama iþlemi için CreateData oluþturuldu. Proje ayaga kalktýgý zaman veritabanýna rolleri atýyacak.
+
+CreateData classý içinde static olarak Create metodu oluþturuldu. Parametreleri ( RoleManager<AppRole> roleManager ).
+Bu metod içerinde  CheckAndCreateRoles( bu metod aþagýda oluþturuluyor.) metoduda  CheckAndCreateRoles(roleManager) þeklinde ekledik.
+Static olarak  metodu oluþturuldu. CheckAndCreateRoles(RoleManager<AppRole> roleManager) roleManager parametresi alýyor.
+
+CheckAndCreateRoles metodunda  
+var allRoles = Enum.GetNames(typeof(ASMSRoles)); diyerek Enumlardan rolleri çekiyoruz.
+foreach (var item in allRoles) ile rolleri geziyoruz.
+ if (!roleManager.RoleExistsAsync(item).Result) veritabanýnda bu roller var mý diye bakýyoruz.
+ ! iþareti koydugumuz için yoksa if bloguna girecek
+
+ AppRole role = new AppRole()
+                    {
+                        Name = item,
+                        IsDeleted = false,
+                        CreatedDate=DateTime.Now,
+                        Description=$"Sistem tarafýndan {item} rolü ektedir."
+                    };
+bu þekilde rollerimizi atýyoruz.
+
+var result = roleManager.CreateAsync(role).Result;  ile kaydediyoruz.
+
+Asenkron iþlem yaptýgýmýz için roleManager.CreateAsync(role).
+Result sonuna result yapmamýz lazým rol atamasý yaparken bu iþlemleri hepsini yapana kadar bekle diyoruz. 
+Result eklediðimiz zaman asenkron olmadan çýkýyo senkron oluyo bu sayede bu iþlemleri yapýyo sonra diger iþlemlere geçiyor. 
+Asenkron oldugu zaman arka tarafta bu iþlemleri yaparken çakýþýyo çünkü asenkron oldugu zaman baþka iþlemler de yapýlýyor.
+
