@@ -20,6 +20,7 @@ namespace ASMSPresentationLayer.Controllers
 
         public IActionResult Index(string email)
         {
+            ViewBag.Email = email;
             return View();
         }
 
