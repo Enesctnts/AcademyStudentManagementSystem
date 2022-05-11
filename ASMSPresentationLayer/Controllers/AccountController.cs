@@ -7,6 +7,7 @@ using ASMSEntityLayer.IdentityModels;
 using ASMSEntityLayer.ResultModels;
 using ASMSEntityLayer.ViewModels;
 using ASMSPresentationLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -319,5 +320,15 @@ namespace ASMSPresentationLayer.Controllers
 
             }
         }
+    
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+    
     }
 }
