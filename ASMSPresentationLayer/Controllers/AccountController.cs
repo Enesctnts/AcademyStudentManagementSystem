@@ -27,11 +27,20 @@ namespace ASMSPresentationLayer.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IStudentBusinessEngine _studentBusinessEngine;
 
-        [HttpGet]
-        public IActionResult Register()
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IEmailSender emailSender, IStudentBusinessEngine studentBusinessEngine)
         {
-            return View();
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
+            _emailSender = emailSender;
+            _studentBusinessEngine = studentBusinessEngine;
         }
+
+        //[HttpGet]
+        //public IActionResult Register()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -41,7 +50,10 @@ namespace ASMSPresentationLayer.Controllers
                 // !ModelState.IsValid ==> burda gelen model var mı, data var mı diye bakıyoruz.
                 if (!ModelState.IsValid)
                 {
-                    return View(model);
+                    //return View(model);
+
+                    TempData["RegisterFailedMessage"] = "Veri girişlerini istenildiği gibi yapamadık.Tekrar deneyiniz!";
+                    return RedirectToAction("Index", "Home");
                 }
 
                 
@@ -50,8 +62,11 @@ namespace ASMSPresentationLayer.Controllers
                 //Aynı emailden tekrar kayıt olunmasın 
                 if (checkUserForEmail!=null)
                 {
-                    ModelState.AddModelError("", "Bu email ile zaten sisteme kayıt yapılmıştır");
-                    return View(model);
+                    //ModelState.AddModelError("", "Bu email ile zaten sisteme kayıt yapılmıştır");
+                    //return View(model);
+
+                    TempData["RegisterFailedMessage"] = "Beklenmedik bir sorun oldu. Üye kaydı başarısız tekrar deneyiniz!";
+                    return RedirectToAction("Index", "Home");
                 }
 
                 //User' ı oluşturalım
@@ -65,7 +80,8 @@ namespace ASMSPresentationLayer.Controllers
                     BirthDate = model.BirthDate.HasValue ? model.BirthDate.Value : null, // HasValue null mı diye bakıyor.
                     Gender = model.Gender,
                     EmailConfirmed = true,
-                    UserName = model.Email
+                    UserName = model.Email,
+                    TCNumber=model.TCNumber
                 };
 
                 var result = await _userManager.CreateAsync(newUser, model.Password);
@@ -99,13 +115,19 @@ namespace ASMSPresentationLayer.Controllers
 
                         Contacts = new string[] { model.Email }
                     };
+                    await _emailSender.SendMessage(emailToStudent);
+                    TempData["RegisterSuccessMessage"] = "Sisteme kaydınız başarıyla gerçekleşti!";
+
                     return RedirectToAction("Login", "Account", new { email = model.Email });
 
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Beklenmedik bir sorun oldu. Üye kaydı başarısız tekrar deneyiniz!");
-                    return View(model);
+                    //ModelState.AddModelError("", "Beklenmedik bir sorun oldu. Üye kaydı başarısız tekrar deneyiniz!");
+                    //return View(model);
+
+                    TempData["RegisterFailedMessage"] = "Beklenmedik bir sorun oldu. Üye kaydı başarısız tekrar deneyiniz!";
+                    return RedirectToAction("Login", "Account");
                 }
 
 
