@@ -35,8 +35,8 @@ namespace ASMSPresentationLayer
         {
             //Aspnet Core'un ConnectionString baðlantýsý yapabilmesi için 
             //yapýlandýrma servislerine dbcontext nesnesini eklemesi gerekir
-            //
-            services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")),ServiceLifetime.Scoped);
+            
+            services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
 
 
             services.AddControllersWithViews();
