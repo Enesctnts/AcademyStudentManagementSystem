@@ -1,4 +1,5 @@
-﻿using ASMSDataAccessLayer.ContactsDAL;
+﻿using ASMSBusinessLayer.ContractsBLL;
+using ASMSDataAccessLayer.ContactsDAL;
 using ASMSEntityLayer.Models;
 using ASMSEntityLayer.ResultModels;
 using ASMSEntityLayer.ViewModels;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ASMSBusinessLayer.ImplementationsBLL
 {
-    public class UsersAddressBusinessEngine
+    public class UsersAddressBusinessEngine : IUsersAddressBusinessEngine
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
