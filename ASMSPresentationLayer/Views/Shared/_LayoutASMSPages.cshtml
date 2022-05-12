@@ -57,6 +57,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <header class="index-banner" id="home">
 
         <partial name="Partials/_HeaderPartial" />
+        <!-- banner -->
+        <div class="banner_section_pages">
+
+
+
+        </div>
+
+        <!-- banner -->
 
 
     </header>
@@ -234,7 +242,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- //js -->
 
     <script src="~/asmsTheme/js/bootstrap.js"></script>
-
+    <!-- İstanbula tıkladıgımız anda istanbula ait ilçerin dropdownliste görmek için yapıyoruz.-->
+    @RenderSection("Scripts", required: false)
+    <!-- Asenkron hali--> 
+    <!-- @await RenderSectionAsync("Scripts", required: false) -->
 </body>
 
 </html>
