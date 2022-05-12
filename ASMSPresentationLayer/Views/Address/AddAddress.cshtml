@@ -26,8 +26,12 @@
             <div class="form-group">
                 <span class="text-danger" style="font-weight:bold; margin-right:3px;">*</span>
                 <label for="City" style="font-weight:bold">İl</label>
-                <select id="CitySelect" name="City" class="form-control" required>
+                <select id="CitySelect" name="City" class="form-control form-control-lg" style="padding:3px" required>
                     <option value="0" selected>***İl Seçiniz***</option>
+                    @foreach (var item in (ICollection<CityVM>)ViewBag.Cities) // ICollection<CityVM> yapmamızın sebebi @item. yazdıktan sonra değerler gözüksün diye
+                    {
+                        <option value="@item.Id"> @item.CityName</option>
+                    }
 
                 </select>
             </div>
@@ -35,7 +39,7 @@
             <div class="form-group">
                 <span class="text-danger" style="font-weight:bold; margin-right:3px;">*</span>
                 <label for="District" style="font-weight:bold">İlçe</label>
-                <select id="DistrictSelect" name="District" class="form-control" required>
+                <select id="DistrictSelect" name="District" class="form-control form-control-lg" style="padding:3px" required>
                     <option value="0" selected>***İlçe Seçiniz***</option>
 
                 </select>
@@ -44,7 +48,7 @@
             <div class="form-group">
                 <span class="text-danger" style="font-weight:bold; margin-right:3px;">*</span>
                 <label for="Neighbourhood" style="font-weight:bold">Mahalle</label>
-                <select id="NeighbourhoodSelect" name="Neighbourhood" class="form-control" required>
+                <select id="NeighbourhoodSelect" name="Neighbourhood" class="form-control form-control-lg" style="padding:3px " required>
                     <option value="0" selected>***Mahalle Seçiniz***</option>
 
                 </select>
@@ -68,3 +72,31 @@
     </div>
 
 </div>
+@section Scripts{ 
+<script>
+    $(document).ready(function () {
+        //sayfa açık oldugunda bazı combolar pasif olacak
+
+    });
+
+    $("CitySelect").on('change', function () {
+
+        //ilçeyi temizle
+        var $district = $("#DistrictSelect");
+        $district.empty();
+        $district.append("<option value='0' selected>***İlçe Seçiniz***</option>");
+
+        //Mahalle temizle
+        var $district = $("#NeighbourhoodSelect");
+        $neighbourhood.empty();
+        $neighbourhood.append("<option value='0' selected>***Mahalle Seçiniz***</option>");
+
+        var cityId = this.value;
+        //Eğer seçilen ilin id'si sıfırdan büyükse ajaxla ilçeleri getir
+        if (cityId>0) {
+            //to be continued... yarın devam edilecek..
+        }
+    })
+
+</script>
+}
