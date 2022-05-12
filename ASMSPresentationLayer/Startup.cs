@@ -39,7 +39,12 @@ namespace ASMSPresentationLayer
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
 
 
-            services.AddControllersWithViews();
+            
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();//Proje çalýþýrken razor sayfalarýnda yapýlan deðiþikler anýnda yansýmasý için eklendi.
+
+
+
             services.AddRazorPages(); // razor sayfalarý için
             services.AddMvc();
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromSeconds(20));
@@ -62,6 +67,7 @@ namespace ASMSPresentationLayer
             services.AddAutoMapper(typeof(Maps));
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<ICityBusinessEngine, CityBusinessEngine>();
             services.AddScoped<IStudentBusinessEngine, StudentBusinessEngine>();
             services.AddScoped<IUsersAddressBusinessEngine, UsersAddressBusinessEngine>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
