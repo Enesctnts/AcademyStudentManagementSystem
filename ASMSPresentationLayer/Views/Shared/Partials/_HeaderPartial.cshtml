@@ -1,16 +1,16 @@
 ﻿@inject SignInManager<AppUser> signManager
-
 <!-- nav -->
 <nav class="main-header d-flex">
     <div id="brand">
         <div id="logo">
-            <a href="/Home/Index/">
+            <a href="/Home/Index"
+               background-color>
                 <i class="fas fa-crosshairs"></i>
             </a>
         </div>
         <div id="word-mark">
             <h1>
-                <a href="/Home/Index/">ASMS</a>
+                <a href="/Home/Index">ASMS</a>
             </h1>
         </div>
     </div>
@@ -24,7 +24,7 @@
         </div>
         <ul class="text-center nav-honey">
             <li>
-                <a href="index.html" class="active ">Ana Sayfa</a>
+                <a href="index.html" class="active ">Anasayfa</a>
             </li>
             <li>
                 <a class="scroll" href="#about">Hakkımızda</a>
@@ -41,33 +41,28 @@
             @if (signManager.IsSignedIn(Context.User))
             {
                 <li>
-                    <div class="dropdown">
-                        <a class="nav-link btn btn-default dropdown-toggle" id="dropdownMenuLink" data-bs-toogle="dropdown" aria-expanded="false" style="margin-right:10px; background-color:white;color:black;"> 
-
+                    <div class="dropdown show">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: white; color: black;">
                             @signManager.UserManager.FindByNameAsync(Context.User.Identity.Name).Result.Name
                             @signManager.UserManager.FindByNameAsync(Context.User.Identity.Name).Result.Surname
-                            
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="drowdownMenuLink" style="background-color:darkblue; color:red;">
-                            <li>
-                                <a class="dropdown-item" style="color:white" href="#">
-                                    Hesap Bilgilerim
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" style="color:white" asp-controller="Account" action="Logout">
-                                    Eğitim Bilgilerim
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" style="color:white" asp-controller="Account" action="Logout">
-                                    Çıkış Yap
-                                </a>
 
-                            </li>
-
-                        </ul>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" style="color:black" href="/Home/Index">
+                                Hesap Bilgilerim
+                            </a>
+                            <a class="dropdown-item" style="color: black" href="/Address/Index">
+                                Adres Bilgilerim
+                            </a>
+                            <a class="dropdown-item" style="color: black" href="/Home/Index">
+                                Eğitim Bilgilerim
+                            </a>
+                            <a class="dropdown-item" style="color: black" asp-controller="Account" asp-action="Logout">
+                                Çıkış Yap
+                            </a>
+                        </div>
                     </div>
+
                 </li>
             }
             else
