@@ -258,9 +258,6 @@ div#word-mark h1 a {
 
 
 /*--/banner--*/
-
-/*-- /header --*/
-
 .banner_section {
     background: url(/asmstheme/images/serve.jpg) no-repeat 0px 0px;
     background-size: cover;
@@ -269,6 +266,20 @@ div#word-mark h1 a {
     -o-background-size: cover;
     -ms-background-size: cover;
     height: 50vw;
+    position: relative;
+    z-index: 0;
+}
+
+/*-- /header --*/
+
+.banner_section_pages {
+    background: url(/asmstheme/images/serve.jpg) no-repeat 0px 0px;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    height: 10vw;
     position: relative;
     z-index: 0;
 }
@@ -321,7 +332,7 @@ a.btn.work.active {
     content: attr(data-text);
     position: absolute;
     overflow: hidden;
-    max-width: 10em;
+    max-width: 15em;
     white-space: nowrap;
     color: #fff;
     animation: loading 8s linear;
