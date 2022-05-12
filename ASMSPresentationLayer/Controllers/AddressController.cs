@@ -18,12 +18,14 @@ namespace ASMSPresentationLayer.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly IUsersAddressBusinessEngine _userAdress;
+        private readonly ICityBusinessEngine _cityEngine;
 
-        public AddressController(UserManager<AppUser> userManager, IEmailSender emailSender, IUsersAddressBusinessEngine userAdress)
+        public AddressController(UserManager<AppUser> userManager, IEmailSender emailSender, IUsersAddressBusinessEngine userAdress, ICityBusinessEngine cityEngine)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _userAdress = userAdress;
+            _cityEngine = cityEngine;
         }
 
         public IActionResult Index()
@@ -34,6 +36,8 @@ namespace ASMSPresentationLayer.Controllers
         [HttpGet]
         public IActionResult AddAddress()
         {
+            //illeri sayfaya götürsün
+            ViewBag.Cities = _cityEngine.GetAll().Data;
             return View();
         }
     }
