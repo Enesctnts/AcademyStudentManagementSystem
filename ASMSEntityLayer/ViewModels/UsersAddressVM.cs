@@ -13,11 +13,13 @@ namespace ASMSEntityLayer.ViewModels
     {
         public string UserId { get; set; }
         public int Id { get; set; }
+        [Required(ErrorMessage = "Mahalle seçimi gereklidir.")]
+
         public int NeighbourhoodId { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Adres Başlığı Gereklidir!")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Adres başlığı en az 2 en çok 50 karakter aralığında olmalıdır!!")]
         [Display(Name = "Adres Başlığı")]
         public string AddressTitle { get; set; }
@@ -31,7 +33,6 @@ namespace ASMSEntityLayer.ViewModels
         public string PostCode { get; set; } 
         public  AppUser AppUser { get; set; } //ViewModel oluşturulken virtual kullanılmaz normalde public virtual AppUser AppUser şeklindeydi ama viewmodelde kullanmıyoruz.
 
-        [Required(ErrorMessage ="Mahalle seçimi gereklidir.")]
         public  NeighbourhoodVM Neighbourhood { get; set; }
 
         //ToDo: ??? Aşagıdakilerle il ve ilçeye ulaşabilir miyim?
