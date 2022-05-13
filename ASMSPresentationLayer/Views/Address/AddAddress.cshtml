@@ -46,7 +46,7 @@ border-radius:4px; padding:10px;">
             <div class="form-group">
                 <span class="text-danger" style="font-weight:bold;margin-right:3px;">*</span>
                 <label for="Neighbourhood" style="font-weight:bold">Mahalle</label>
-                <select id="NeighbourhoodSelect" name="Neighbourhood"
+                <select id="NeighbourhoodSelect" asp-for="NeighbourhoodId"
                         class="form-control" style="padding:3px" required>
                     <option value="0" selected>***Mahalle Seçiniz***</option>
                 </select>
@@ -68,8 +68,7 @@ border-radius:4px; padding:10px;">
 
             <div class="col-md-12">
                 <div class="col-md-6">
-                    <input value="Adres Ekle" type="submit" id="btnAddAddress"
-                           asp-controller="Address" asp-action="AddAddress"
+                    <input value="Adres Ekle" type="submit" id="btnAddAdress"
                            class="btn btn-block btn-default" style="background-color:darkblue;color:white;float:left" />
                 </div>
 
@@ -148,6 +147,7 @@ border-radius:4px; padding:10px;">
             //districtId alınmalı ve Neighbourhood controllera gönderilmeli
             var districtId = this.value;
             if (districtId > 0) {
+                alert(districtId);
                 //ilçe seçilince mahalleri getirsin
                 $.ajax({
                     type: "GET",
@@ -164,7 +164,9 @@ border-radius:4px; padding:10px;">
 
                         });
 
-                        $btn.attr("disabled", false); // buton aktif olsun
+                        //var $btn=$("#btnAddAdress")
+                        //$btn.attr("disabled", false); // buton aktif olsun
+                        $("#btnAddAdress").attr("disabled", false);//buton pasif olsun
 
                     },
                     error: function (err) {
