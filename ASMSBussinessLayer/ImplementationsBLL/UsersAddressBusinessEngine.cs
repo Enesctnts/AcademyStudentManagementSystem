@@ -43,8 +43,10 @@ namespace ASMSBusinessLayer.ImplementationsBLL
             {
                 if (userId != null)
                 {
+                    //inner join gibi join yaparak getir diyoruz. includeEntities ilişkili tablolarıda getir demek
                     var userAddressList = _unitOfWork
-                        .UsersAddressRepo.GetAll(x => x.UserId == userId);
+                        .UsersAddressRepo.GetAll(x => x.UserId == userId, includeEntities:"Neighbourhood");
+
                     var result = _mapper.Map<IQueryable<UsersAddress>, ICollection<UsersAddressVM>>(userAddressList);
 
                     return new SuccessDataResult<ICollection<UsersAddressVM>>(result, $"{result.Count} address has been found");
