@@ -136,3 +136,14 @@ Result sonuna result yapmamýz lazým rol atamasý yaparken bu iþlemleri hepsini ya
 Result eklediðimiz zaman asenkron olmadan çýkýyo senkron oluyo bu sayede bu iþlemleri yapýyo sonra diger iþlemlere geçiyor. 
 Asenkron oldugu zaman arka tarafta bu iþlemleri yaparken çakýþýyo çünkü asenkron oldugu zaman baþka iþlemler de yapýlýyor.
 
+AddAddress e @section Scripts ekledik. Buralarý yazma amacýmýz il seçtiðimiz anda sayfa yenilenmeden ilçeler gelsin.
+JQuery ve Ajax iþlemleri yapýldý.
+Bu yaptýklarýmýzý _LayoutASMS nin en altýnda @RenderSection("Scripts", required: false) þeklinde çagýrdýk.
+
+DistrictController oluþturduk. Bu Controllerda 
+private readonly IDistrictBusinessEngine _districtEngine;  
+
+public JsonResult GetCityDistricts(byte cityId)  metodu oluþturduk.
+var data = _districtEngine.GetDistrictsOfCity(cityId).Data; try catch oluþturduk. try kýsmýnda return Json(new { isSuccess = true, data });
+Bu þekilde veriyi döndürdük.
+catch kýsmýnda return Json(new { isSuccess = false }); bu þekilde dönüþ yapýldý.
