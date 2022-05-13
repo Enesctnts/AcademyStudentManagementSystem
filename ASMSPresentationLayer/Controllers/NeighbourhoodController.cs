@@ -16,11 +16,11 @@ namespace ASMSPresentationLayer.Controllers
             _neighbourhoodEngine = neighbourhoodEngine;
         }
 
-        public JsonResult GetDistrictNeigbourhoods(int districtId)
+        public JsonResult GetDistrictNeighbourhoods(int id)
         {
             try
             {
-                var data = _neighbourhoodEngine.GetNeighbourhoodsOfDistrict(districtId).Data;
+                var data = _neighbourhoodEngine.GetNeighbourhoodsOfDistrict(id).Data;
                 return Json(new { isSuccess = true,data });
             }
             catch (Exception ex)
