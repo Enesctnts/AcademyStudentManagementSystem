@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace ASMSPresentationLayer.Controllers
 {
-
     [Authorize]
     public class AddressController : Controller
     {
