@@ -36,6 +36,7 @@
                 <p class="login-box-msg">Yönetim Paneli Kayıt Sayfası</p>
 
                 <form asp-area="Management" asp-controller="Admin" asp-action="Register" method="post">
+                    <div class="text-danger" asp-validation-summary="All"></div>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" asp-for="Name" placeholder="Adınız...">
                         <div class="input-group-append">
