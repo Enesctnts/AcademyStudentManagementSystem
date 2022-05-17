@@ -4,6 +4,7 @@ using ASMSEntityLayer.Enums;
 using ASMSEntityLayer.IdentityModels;
 using ASMSPresentationLayer.Areas.Management.Models;
 using ASMSPresentationLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -95,7 +96,11 @@ namespace ASMSPresentationLayer.Areas.Management.Controllers
 
                     TempData["RegisterSuccessMessage"] = "Sisteme kaydınız başarıyla gerçekleşti!";
                     _logger.LogInformation("Sisteme yeni bir öğrenci işleri personeli kayıt oldu. userId" + newUser.Id );
-                    return RedirectToAction("Login", "Management/Admin", new {email = model.Email });
+                    //bu işlem area işlemine yönlendiriyor
+                    //return RedirectToAction("Login", "Admin", new {area="Management", email = model.Email });
+                    //yukardakiyle aynı işlem
+                    return RedirectToAction("Login", "Admin", new {area=nameof(Areas.Management), email = model.Email });
+
 
                 }
                 else
@@ -168,12 +173,12 @@ namespace ASMSPresentationLayer.Areas.Management.Controllers
                 //Sisteme giren kişinin rolü admin Dashboard sayfası açılsın diyoruz.
                 if (_userManager.IsInRoleAsync(user, ASMSRoles.Coordinator.ToString()).Result)
                 {
-                    return RedirectToAction("Dashboard", "Management/Admin");
+                    return RedirectToAction("Dashboard", "Admin", new { area=nameof(Areas.Management)});
                 }
                 //Sisteme giren kişinin rolü öğrenci işleri Dashboard sayfası açılsın diyoruz.
                 if (_userManager.IsInRoleAsync(user, ASMSRoles.StudentAdministration.ToString()).Result)
                 {
-                    return RedirectToAction("Dashboard", "Management/Admin");
+                    return RedirectToAction("Dashboard", "Admin", new { area = nameof(Areas.Management) });
                 }
 
                 return RedirectToAction("Index", "Home");
@@ -188,5 +193,13 @@ namespace ASMSPresentationLayer.Areas.Management.Controllers
 
         }
 
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Admin", new { area = nameof(Areas.Management) });
+        }
     }
 }
