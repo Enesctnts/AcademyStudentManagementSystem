@@ -102,22 +102,19 @@ namespace ASMSPresentationLayer
             //MVC ile ayný kod bloðu endpoint'in mekanizmasýnýn nasýl olacaðý belirleniyor
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                //Area için yapýyoruz alttakini.
-                //endpoints.MapAreaControllerRoute(
-                //    name: "management",
-                //    areaName: "management",
-                //    pattern: "{management:exists}/{controller=Admin}/{action=Login}/{id?}"
-
-                //    );
-
+                //Area için yapýyoruz alttakini. Ýlk area iþlemini yazýyoruz.o yüzden areayý öne yazýyoz ilk areaya bak diyoz. yoksa çalýþmýyor sistem
                 endpoints.MapAreaControllerRoute(
                   "management",
                   "management",
-                  "management/{controller=Admin}/{action=Register}/{id?}"
+                  "management/{controller=Admin}/{action=Login}/{id?}"
                   );
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                
+                
+
+                
             });
 
             
